@@ -37,6 +37,10 @@ void HaEntityValve::publishConfiguration() {
   doc["command_topic"] =
       _ha_bridge.getTopic(HaBridge::TopicType::Command, COMPONENT, _child_object_id, OBJECT_ID_STATE);
 
+  if (!_configuration.availability_topic.empty()) {
+    doc["availability_topic"] = _configuration.availability_topic;
+  }
+
   _ha_bridge.publishConfiguration(COMPONENT, OBJECT_ID, _child_object_id, doc);
 }
 

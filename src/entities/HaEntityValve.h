@@ -37,10 +37,16 @@ public:
      * command topic with retain set to true.
      */
     bool retain = false;
+
+    /**
+     * @brief Optional per-entity availability topic. When set, overrides the
+     * global availability topic from HaBridge. Leave empty to use the global one.
+     */
+    std::string availability_topic = "";
   };
 
   inline static Configuration _default = {
-      .reports_position = false, .position_closed = 0, .position_open = 100, .retain = false};
+      .reports_position = false, .position_closed = 0, .position_open = 100, .retain = false, .availability_topic = ""};
 
   /**
    * @brief Construct a new HaEntityValve object.
