@@ -41,6 +41,10 @@ void HaEntityValve::publishConfiguration() {
     doc["availability_topic"] = _configuration.availability_topic;
   }
 
+  if (!_configuration.device_class.empty()) {
+    doc["device_class"] = _configuration.device_class;
+  }
+
   _ha_bridge.publishConfiguration(COMPONENT, OBJECT_ID, _child_object_id, doc);
 }
 

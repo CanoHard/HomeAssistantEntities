@@ -43,10 +43,12 @@ public:
      * global availability topic from HaBridge. Leave empty to use the global one.
      */
     std::string availability_topic = "";
+
+    std::string device_class = ""; 
   };
 
   inline static Configuration _default = {
-      .reports_position = false, .position_closed = 0, .position_open = 100, .retain = false, .availability_topic = ""};
+      .reports_position = false, .position_closed = 0, .position_open = 100, .retain = false, .availability_topic = "", .device_class = ""};
 
   /**
    * @brief Construct a new HaEntityValve object.
