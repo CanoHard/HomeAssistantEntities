@@ -82,13 +82,13 @@ public:
    * @param position the valve position (0-100), only used when reports_position
    * is true. Ignored when reports_position is false.
    */
-  void publish(std::optional<State> state, std::optional<uint8_t> position = std::nullopt);
+  void publish(std::optional<State> state, std::optional<uint8_t> position = std::nullopt, bool retain = false);
 
   /**
    * @brief Publish the valve state and/or position, but only if the value has
    * changed. Also see publish().
    */
-  void update(std::optional<State> state, std::optional<uint8_t> position = std::nullopt);
+  void update(std::optional<State> state, std::optional<uint8_t> position = std::nullopt, bool retain = false);
 
   enum class Action {
     Open,

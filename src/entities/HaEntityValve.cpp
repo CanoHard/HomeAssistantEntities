@@ -64,7 +64,7 @@ static std::string stateToString(HaEntityValve::State state) {
   return "";
 }
 
-void HaEntityValve::publish(std::optional<State> state, std::optional<uint8_t> position) {
+void HaEntityValve::publish(std::optional<State> state, std::optional<uint8_t> position, bool retain) {
   if (!state && !position) {
     return;
   }
@@ -92,25 +92,25 @@ void HaEntityValve::publish(std::optional<State> state, std::optional<uint8_t> p
       _position = clamped;
     }
     if (!doc.empty()) {
-      _ha_bridge.publishMessage(topic, toJsonString(doc));
+      _ha_bridge.publishMessage(topic, toJsonString(doc), retain);
     }
   } else {
     // Publish as plain state string
     if (state) {
       std::string str = stateToString(*state);
       if (!str.empty()) {
-        _ha_bridge.publishMessage(topic, str);
+        _ha_bridge.publishMessage(topic, str, retain);
         _state = state;
       }
     }
   }
 }
 
-void HaEntityValve::update(std::optional<State> state, std::optional<uint8_t> position) {
+void HaEntityValve::update(std::optional<State> state, std::optional<uint8_t> position, bool retain) {
   bool state_changed = state != _state;
   bool position_changed = position != _position;
   if (state_changed || position_changed) {
-    publish(state_changed ? state : std::nullopt, position_changed ? position : std::nullopt);
+    publish(state_changed ? state : std::nullopt, position_changed ? position : std::nullopt, retain);
   }
 }
 
