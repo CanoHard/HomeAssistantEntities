@@ -74,7 +74,7 @@ void HaEntityValve::publish(std::optional<State> state, std::optional<uint8_t> p
   if (_configuration.reports_position) {
     // Publish as JSON: {"state": "opening", "position": 10}
     IJsonDocument doc;
-    if (state) {
+    if (state == State::Closing || state == State::Opening) {
       std::string str = stateToString(*state);
       if (!str.empty()) {
         doc["state"] = str;
