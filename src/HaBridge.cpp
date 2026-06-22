@@ -11,11 +11,13 @@ void HaBridge::publishConfiguration(std::string component, std::string object_id
   IJsonDocument doc;
   doc["availability_topic"] = santitizePath(_remote.clientId()) + "/status";
 
+  auto coid = homeassistantentities::trim(child_object_id);
+  auto sanitized_coid = santitizePath(coid);
+
   std::string unique_id = _remote.clientId() + "_" + _node_id;
 
-  auto coid = homeassistantentities::trim(child_object_id);
   if (!coid.empty()) {
-    unique_id += "_" + coid;
+    unique_id += "_" + sanitized_coid;
   }
   unique_id += "_" + object_id;
   doc["unique_id"] = unique_id;
@@ -33,7 +35,7 @@ void HaBridge::publishConfiguration(std::string component, std::string object_id
   std::string topic =
       "homeassistant/" + santitizePath(component) + "/" + santitizePath(_node_id) + "/" + santitizePath(object_id);
   if (!coid.empty()) {
-    topic += "_" + coid;
+    topic += "_" + sanitized_coid;
   }
   topic += "/config";
   publishMessage(topic, message, true);
